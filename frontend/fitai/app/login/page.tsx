@@ -35,7 +35,7 @@ export default function LoginPage() {
 
   return (
     <AuthShell>
-      <h1 className="font-display text-3xl text-white sm:text-4xl">
+      <h1 className="font-display text-3xl tracking-wide text-white sm:text-4xl">
         Welcome Back
       </h1>
       <p className="mt-3 text-sm text-ink-muted">

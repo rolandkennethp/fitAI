@@ -25,8 +25,8 @@ export function DetailOptionCard({
     >
       <div
         className={cn(
-          "font-display text-base tracking-wide",
-          selected ? "text-lime" : "text-white"
+          "font-display text-base tracking-wider",
+          selected ? "text-lime" : "text-white",
         )}
       >
         {label.toUpperCase()}
