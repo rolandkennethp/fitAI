@@ -87,7 +87,7 @@ export const EQUIPMENT_OPTIONS: LabelOption<Equipment>[] = [
   { value: "cable", label: "Cable" },
   { value: "machine", label: "Machine" },
   { value: "bodyweight", label: "Bodyweight" },
-  { value: "kettlebell", label: "Kettlebell" },
+  { value: "pullup bar", label: "Pull-up Bar" },
 ];
 
 export const MUSCLE_FOCUS_OPTIONS: LabelOption<MuscleGroup>[] = [

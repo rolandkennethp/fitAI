@@ -15,7 +15,7 @@ export type Equipment =
   | "cable"
   | "machine"
   | "bodyweight"
-  | "kettlebell";
+  | "pullup bar";
 
 export type MuscleGroup =
   | "chest"
