@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowUp, Sparkles } from "lucide-react";
+import { ArrowUp, Sparkles, X } from "lucide-react";
 import { CoachMessage, SuggestedPrompt } from "@/types/coach";
 import { CoachMessageBubble } from "./CoachMessageBubble";
 import { SuggestedPromptChip } from "./SuggestedPromptChip";
@@ -14,6 +14,8 @@ interface AiCoachPanelProps {
   isSending: boolean;
   onSend: (text: string) => void;
   className?: string;
+  /** Present only for the mobile full-screen overlay variant. */
+  onClose?: () => void;
 }
 
 export function AiCoachPanel({
@@ -23,6 +25,7 @@ export function AiCoachPanel({
   isSending,
   onSend,
   className,
+  onClose,
 }: AiCoachPanelProps) {
   const [draft, setDraft] = useState("");
 
@@ -40,7 +43,22 @@ export function AiCoachPanel({
         className,
       )}
     >
-      <div className="flex items-center justify-between border-b border-border px-6 py-5">
+      <div className="absolute right-3 top-2 sm:hidden flex h-11 w-11 items-center justify-center rounded-md border border-border bg-bg-elevated">
+        {onClose ? (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close AI Coach"
+            className="flex h-full w-full items-center justify-center text-ink-muted hover:text-white"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        ) : (
+          <Sparkles className="h-5 w-5 text-lime" />
+        )}
+      </div>
+
+      <div className="flex items-center justify-between border-b border-border px-6 py-5 pr-20 sm:pr-6">
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-lime" />
           <span className="text-sm font-semibold uppercase tracking-wide text-white">
@@ -52,7 +70,7 @@ export function AiCoachPanel({
         </span>
       </div>
 
-      <div className="flex-1 space-y-5 overflow-y-auto [&::-webkit-scrollbar]:hidden px-6 py-6">
+      <div className="flex-1 space-y-5 overflow-y-auto px-6 py-6">
         {messages.map((message) => (
           <CoachMessageBubble key={message.id} message={message} />
         ))}
