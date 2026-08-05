@@ -9,7 +9,7 @@ import { useDashboardSummary } from "@/hooks/useDashboard";
 import { useCoachChat } from "@/hooks/useCoachChat";
 import { useMobileCoach } from "@/hooks/useMobileCoach";
 import { INITIAL_COACH_MESSAGE, SUGGESTED_PROMPTS } from "@/data/coach-mock";
-import Loading from "../loading";
+import Loading from "../../loading";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -43,7 +43,7 @@ export default function DashboardPage() {
 
       {/* Desktop: always-visible side panel */}
       <AiCoachPanel
-        className="hidden shrink-0 lg:flex lg:h-full lg:w-110"
+        className="hidden shrink-0 lg:flex lg:h-full lg:w-97.5"
         contextLabel={contextLabel}
         messages={messages}
         prompts={SUGGESTED_PROMPTS}

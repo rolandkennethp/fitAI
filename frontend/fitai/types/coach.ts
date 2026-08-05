@@ -1,14 +1,21 @@
-// Mirrors what the AI Coach endpoint will return once connected to the
-// backend (which in turn calls Gemini). See requirements.md section 16:
-// the AI never writes to the DB directly — it returns a structured action
-// that the backend validates first. CoachAction is the frontend's typed
-// placeholder for that structured payload.
-
 export type CoachRole = "assistant" | "user";
 
+export interface CoachActionChange {
+  icon: "increase" | "change";
+  label: string;
+}
+
 export interface CoachAction {
-  type: "reschedule_workout" | "shorten_workout" | "replace_exercise" | "none";
+  type:
+    | "reschedule_workout"
+    | "shorten_workout"
+    | "replace_exercise"
+    | "adjust_load"
+    | "none";
   summary: string;
+  title?: string;
+  changes?: CoachActionChange[];
+  applied?: boolean;
 }
 
 export interface CoachMessage {
@@ -16,7 +23,6 @@ export interface CoachMessage {
   role: CoachRole;
   content: string;
   timestamp: string;
-  /** Present when the AI is proposing a concrete plan change. */
   action?: CoachAction;
 }
 

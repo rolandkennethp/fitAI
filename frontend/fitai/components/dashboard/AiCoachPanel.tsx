@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowUp, Sparkles, X } from "lucide-react";
 import { CoachMessage, SuggestedPrompt } from "@/types/coach";
 import { CoachMessageBubble } from "./CoachMessageBubble";
@@ -35,7 +35,15 @@ export function AiCoachPanel({
     onSend(draft);
     setDraft("");
   }
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const container = messagesContainerRef.current;
+
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }, [messages]);
   return (
     <aside
       className={cn(
@@ -70,7 +78,10 @@ export function AiCoachPanel({
         </span>
       </div>
 
-      <div className="flex-1 space-y-5 overflow-y-auto px-6 py-6">
+      <div
+        ref={messagesContainerRef}
+        className="flex-1 space-y-5 overflow-y-auto [&::-webkit-scrollbar]:hidden px-6 py-6"
+      >
         {messages.map((message) => (
           <CoachMessageBubble key={message.id} message={message} />
         ))}

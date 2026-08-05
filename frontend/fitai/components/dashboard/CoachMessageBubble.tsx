@@ -1,5 +1,6 @@
 import { CoachMessage } from "@/types/coach";
 import { cn } from "@/lib/utils";
+import { CoachActionCard } from "./CoachActionCard";
 
 export function CoachMessageBubble({ message }: { message: CoachMessage }) {
   const isAssistant = message.role === "assistant";
@@ -21,6 +22,13 @@ export function CoachMessageBubble({ message }: { message: CoachMessage }) {
       >
         {message.content}
       </p>
+      {isAssistant && message.action?.title && (
+        <CoachActionCard
+          title={message.action.title}
+          changes={message.action.changes}
+          applied={message.action.applied}
+        />
+      )}
     </div>
   );
 }
