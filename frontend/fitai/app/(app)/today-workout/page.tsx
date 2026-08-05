@@ -93,7 +93,7 @@ export default function TodayWorkoutPage() {
       </main>
 
       <AiCoachPanel
-        className="hidden shrink-0 lg:flex lg:h-full  lg:w-[390px]"
+        className="hidden shrink-0 lg:flex lg:h-full  lg:w-97.5"
         contextLabel={contextLabel}
         messages={messages}
         prompts={SUGGESTED_PROMPTS}

@@ -91,7 +91,7 @@ export const MOCK_ACTIVE_WORKOUT: ActiveWorkout = {
       equipment: "Cable",
       restSeconds: 90,
       previous: { weight: 30, reps: 12 },
-      todayTarget: { weight: 38, reps: 12 },
+      todayTarget: { weight: 30, reps: 12 },
       progressUp: false,
       sets: makeSets([
         { weight: 30, reps: 12 },

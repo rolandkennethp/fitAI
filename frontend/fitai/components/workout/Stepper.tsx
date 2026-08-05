@@ -30,11 +30,11 @@ export function Stepper({
         onClick={() => onChange(-step)}
         disabled={disabled}
         aria-label={`Decrease ${unit}`}
-        className="flex h-6 w-6 items-center justify-center rounded-[2px] text-ink-muted hover:bg-white/5 hover:text-white disabled:pointer-events-none"
+        className="flex h-6 w-6 items-center justify-center rounded-xs text-ink-muted hover:bg-white/5 hover:text-white disabled:pointer-events-none"
       >
         <Minus className="h-3 w-3" />
       </button>
-      <span className="min-w-[2.5rem] text-center text-sm font-semibold text-white">
+      <span className="min-w-10 text-center text-sm font-semibold text-white">
         {value}{" "}
         <span className="ml-0.5 text-xs font-normal text-ink-muted">
           {unit}
