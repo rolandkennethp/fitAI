@@ -22,7 +22,7 @@ export function WorkoutHeaderCard({
     totalSets > 0 ? Math.round((completedSets / totalSets) * 100) : 0;
 
   return (
-    <div className="rounded-[4px] border border-border">
+    <div className="rounded-sm border border-border">
       <div className="flex flex-wrap items-center justify-between gap-6 px-6 py-6">
         <div>
           <p className="text-xs uppercase tracking-wider text-lime">

@@ -26,7 +26,7 @@ export function ExerciseCard({
   const completedCount = exercise.sets.filter((s) => s.isCompleted).length;
 
   return (
-    <div className="rounded-[4px] border border-border">
+    <div className="rounded-sm border border-border">
       <div className="flex items-start justify-between px-5 py-4">
         <div className="flex items-start gap-3">
           <span className="pt-0.5 text-xs text-ink-faint">
