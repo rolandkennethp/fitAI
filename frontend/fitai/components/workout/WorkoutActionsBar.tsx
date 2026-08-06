@@ -11,11 +11,13 @@ export function WorkoutActionsBar({
 }: WorkoutActionsBarProps) {
   return (
     <div className="flex items-center gap-5">
-      <Button onClick={onFinish}>Finish Workout</Button>
+      <Button className="font-sans font-semibold" onClick={onFinish}>
+        Finish Workout
+      </Button>
       <button
         type="button"
         onClick={onAdapt}
-        className="font-display text-sm tracking-wide text-ink-muted hover:text-white"
+        className="text-sm font-semibold tracking-wide text-ink-muted hover:text-white"
       >
         Adapt with FitAI
       </button>

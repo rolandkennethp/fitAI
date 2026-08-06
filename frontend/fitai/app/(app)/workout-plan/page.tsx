@@ -10,6 +10,7 @@ import { useMobileCoach } from "@/hooks/useMobileCoach";
 import { INITIAL_PLAN_COACH_MESSAGES } from "@/data/plan-coach-mock";
 import { SUGGESTED_PROMPTS } from "@/data/coach-mock";
 import { sendPlanCoachMessage } from "@/services/planCoachService";
+import Loading from "@/app/loading";
 
 export default function WorkoutPlanPage() {
   const { weekPlan, isLoading, applyReschedule } = useWeekPlan();
@@ -37,11 +38,7 @@ export default function WorkoutPlanPage() {
   }
 
   if (isLoading || !weekPlan) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <p className="text-sm text-ink-muted">Loading your plan…</p>
-      </div>
-    );
+    return <Loading />;
   }
 
   const todayEntry = weekPlan.days.find((d) => d.status === "today");
@@ -50,11 +47,11 @@ export default function WorkoutPlanPage() {
     : "This Week";
 
   return (
-    <div className="relative h-full overflow-y-auto px-6 py-8 lg:px-10 lg:py-10">
+    <div className="relative h-full overflow-y-auto px-6 py-8 lg:pl-10 md:pr-100 lg:py-10">
       <div className="space-y-6">
         <WeekPlanHeader weekPlan={weekPlan} onAdjustSchedule={openCoach} />
 
-        <div className="rounded-sm border border-border">
+        <div className="rounded-sm overflow-hidden border border-border">
           {weekPlan.days.map((day) => (
             <DayRow key={day.date} day={day} />
           ))}
@@ -71,7 +68,7 @@ export default function WorkoutPlanPage() {
       {isCoachOpen && (
         <div className="fixed inset-0 z-40">
           <div className="absolute inset-0 bg-black/60" onClick={closeCoach} />
-          <div className="absolute inset-y-0 right-0 w-full max-w-125">
+          <div className="absolute inset-y-0 right-0 w-full max-w-97.5">
             <AiCoachPanel
               className="h-full w-full"
               contextLabel={contextLabel}

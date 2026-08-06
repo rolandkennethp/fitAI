@@ -79,7 +79,7 @@ export function TodayWorkoutCard({
       </div>
 
       <div className="flex flex-wrap items-center gap-4 border-t border-border px-6 py-5">
-        <Button onClick={onStartWorkout}>
+        <Button onClick={onStartWorkout} className="font-sans font-semibold">
           Start Workout
           <ArrowRight className="h-4 w-4" />
         </Button>
@@ -101,7 +101,7 @@ function Stat({
   value: string;
 }) {
   return (
-    <div>
+    <div className="flex flex-col items-end">
       <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-ink-muted">
         <Icon className="h-3.5 w-3.5" />
         {label}

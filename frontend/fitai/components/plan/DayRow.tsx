@@ -11,7 +11,7 @@ export function DayRow({ day }: { day: DayPlan }) {
     <div
       className={cn(
         "flex flex-wrap items-center justify-between gap-4 border-b border-border px-6 py-5 last:border-b-0 sm:px-8",
-        isToday && "bg-lime/5",
+        isToday && "bg-lime/20",
       )}
     >
       <div className="w-24 shrink-0">
@@ -24,7 +24,7 @@ export function DayRow({ day }: { day: DayPlan }) {
       <div className={cn("flex-1", isMissed && "opacity-50")}>
         <p
           className={cn(
-            "font-display text-2xl sm:text-3xl",
+            " text-xl uppercase tracking-wide font-semibold sm:text-2xl",
             isMissed && "line-through decoration-2",
             isRest || isMissed ? "text-ink-muted" : "text-white",
           )}

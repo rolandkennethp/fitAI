@@ -62,13 +62,17 @@ export function CoachActionCard({
             <Button
               variant="primary"
               onClick={onApply}
-              className="px-4 py-2 text-xs"
+              className="px-4 font-sans font-semibold py-2 text-xs"
             >
               Apply Changes
             </Button>
           )}
           {onKeepAsIs && (
-            <Button variant="ghost" onClick={onKeepAsIs} className="text-xs">
+            <Button
+              variant="ghost"
+              onClick={onKeepAsIs}
+              className="text-xs font-sans font-semibold"
+            >
               Keep As Is
             </Button>
           )}

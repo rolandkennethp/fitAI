@@ -25,7 +25,7 @@ export function DayStatusControl({ status }: { status: DayStatus }) {
         <Badge label="Today" className="border-lime/40 text-lime" />
         <Button
           onClick={() => router.push("/today-workout")}
-          className="px-4 py-2 text-xs"
+          className="px-4 py-2 uppercase font-sans font-semibold  text-xs"
         >
           Start
         </Button>
