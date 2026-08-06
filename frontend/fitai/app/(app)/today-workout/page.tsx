@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { sendCoachMessage } from "@/services/coachService";
 import { WorkoutHeaderCard } from "@/components/workout/WorkoutHeaderCard";
 import { ExerciseCard } from "@/components/workout/ExerciseCard";
 import { WorkoutActionsBar } from "@/components/workout/WorkoutActionsBar";
@@ -31,6 +32,7 @@ export default function TodayWorkoutPage() {
 
   const { messages, send, isSending } = useCoachChat(
     INITIAL_TODAY_COACH_MESSAGES,
+    sendCoachMessage,
   );
   const {
     isOpen: isCoachOpenMobile,

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { sendCoachMessage } from "@/services/coachService";
 import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { TodayWorkoutCard } from "@/components/dashboard/TodayWorkoutCard";
 import { WeekAhead } from "@/components/dashboard/WeekAhead";
@@ -14,7 +15,10 @@ import Loading from "../../loading";
 export default function DashboardPage() {
   const router = useRouter();
   const { summary, isLoading } = useDashboardSummary();
-  const { messages, send, isSending } = useCoachChat([INITIAL_COACH_MESSAGE]);
+  const { messages, send, isSending } = useCoachChat(
+    [INITIAL_COACH_MESSAGE],
+    sendCoachMessage,
+  );
   const { isOpen: isCoachOpenMobile, close: closeCoachMobile } =
     useMobileCoach();
 

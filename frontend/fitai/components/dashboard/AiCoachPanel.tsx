@@ -14,8 +14,9 @@ interface AiCoachPanelProps {
   isSending: boolean;
   onSend: (text: string) => void;
   className?: string;
-  /** Present only for the mobile full-screen overlay variant. */
   onClose?: () => void;
+  onApplyAction?: (messageId: string) => void;
+  onKeepAsIs?: (messageId: string) => void;
 }
 
 export function AiCoachPanel({
@@ -26,6 +27,8 @@ export function AiCoachPanel({
   onSend,
   className,
   onClose,
+  onApplyAction,
+  onKeepAsIs,
 }: AiCoachPanelProps) {
   const [draft, setDraft] = useState("");
 
@@ -83,7 +86,12 @@ export function AiCoachPanel({
         className="flex-1 space-y-5 overflow-y-auto [&::-webkit-scrollbar]:hidden px-6 py-6"
       >
         {messages.map((message) => (
-          <CoachMessageBubble key={message.id} message={message} />
+          <CoachMessageBubble
+            key={message.id}
+            message={message}
+            onApplyAction={onApplyAction}
+            onKeepAsIs={onKeepAsIs}
+          />
         ))}
         {isSending && (
           <p className="text-xs text-ink-faint">FitAI is thinking…</p>

@@ -1,8 +1,13 @@
 export type CoachRole = "assistant" | "user";
 
 export interface CoachActionChange {
-  icon: "increase" | "change";
+  icon: "add" | "remove" | "change";
   label: string;
+}
+
+export interface ReschedulePayload {
+  missedDayIndex: number;
+  targetDayIndex: number;
 }
 
 export interface CoachAction {
@@ -11,11 +16,14 @@ export interface CoachAction {
     | "shorten_workout"
     | "replace_exercise"
     | "adjust_load"
+    | "reschedule_plan"
     | "none";
   summary: string;
   title?: string;
   changes?: CoachActionChange[];
   applied?: boolean;
+  requiresConfirmation?: boolean;
+  reschedulePayload?: ReschedulePayload;
 }
 
 export interface CoachMessage {

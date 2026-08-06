@@ -2,7 +2,17 @@ import { CoachMessage } from "@/types/coach";
 import { cn } from "@/lib/utils";
 import { CoachActionCard } from "./CoachActionCard";
 
-export function CoachMessageBubble({ message }: { message: CoachMessage }) {
+interface CoachMessageBubbleProps {
+  message: CoachMessage;
+  onApplyAction?: (messageId: string) => void;
+  onKeepAsIs?: (messageId: string) => void;
+}
+
+export function CoachMessageBubble({
+  message,
+  onApplyAction,
+  onKeepAsIs,
+}: CoachMessageBubbleProps) {
   const isAssistant = message.role === "assistant";
 
   return (
@@ -27,6 +37,9 @@ export function CoachMessageBubble({ message }: { message: CoachMessage }) {
           title={message.action.title}
           changes={message.action.changes}
           applied={message.action.applied}
+          requiresConfirmation={message.action.requiresConfirmation}
+          onApply={onApplyAction ? () => onApplyAction(message.id) : undefined}
+          onKeepAsIs={onKeepAsIs ? () => onKeepAsIs(message.id) : undefined}
         />
       )}
     </div>

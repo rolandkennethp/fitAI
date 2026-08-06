@@ -23,7 +23,7 @@ export const INITIAL_TODAY_COACH_MESSAGES: CoachMessage[] = [
       summary: "Load increased across all sets",
       title: "Load increased across all sets",
       changes: [
-        { icon: "increase", label: "Working weight — +5% on every set" },
+        { icon: "add", label: "Working weight — +5% on every set" },
         { icon: "change", label: "Rest — 90s → 75s" },
       ],
       applied: true,
