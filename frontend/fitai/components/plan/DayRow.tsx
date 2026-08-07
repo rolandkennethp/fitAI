@@ -24,7 +24,7 @@ export function DayRow({ day }: { day: DayPlan }) {
       <div className={cn("flex-1", isMissed && "opacity-50")}>
         <p
           className={cn(
-            " text-xl uppercase tracking-wide font-semibold sm:text-2xl",
+            " text-xl font-display uppercase tracking-wide sm:text-2xl",
             isMissed && "line-through decoration-2",
             isRest || isMissed ? "text-ink-muted" : "text-white",
           )}

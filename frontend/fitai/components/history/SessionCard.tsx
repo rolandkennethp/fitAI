@@ -26,12 +26,12 @@ export function SessionCard({ session, isOpen, onToggle }: SessionCardProps) {
             <p className="text-xs uppercase tracking-wide text-ink-faint">
               {session.monthLabel}
             </p>
-            <p className="font-display text-2xl text-white">
+            <p className="font-display text-lg sm:text-xl text-white">
               {session.dayNumberLabel}
             </p>
           </div>
           <div>
-            <p className="font-display text-2xl text-white sm:text-3xl">
+            <p className="font-display text-xl text-white sm:text-2xl">
               {session.workoutName}
             </p>
             <p className="mt-0.5 text-xs text-ink-muted">
@@ -64,7 +64,7 @@ export function SessionCard({ session, isOpen, onToggle }: SessionCardProps) {
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <p className="border-t border-border px-6 py-3 text-xs font-medium uppercase tracking-wide text-ink-faint sm:px-8">
+            <p className="border-t border-border px-6 py-3 text-xs font-medium uppercase tracking-wide text-ink-faint sm:px-6">
               {session.fullDateLabel}
             </p>
             <div>
