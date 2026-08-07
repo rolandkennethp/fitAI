@@ -2,8 +2,7 @@
 
 import { WeekPlanHeader } from "@/components/plan/WeekPlanHeader";
 import { DayRow } from "@/components/plan/DayRow";
-import { AskFitaiButton } from "@/components/plan/AskFitaiButton";
-import { AiCoachPanel } from "@/components/dashboard/AiCoachPanel";
+import { FloatingCoachOverlay } from "@/components/shared/FloatingCoachOverlay";
 import { useWeekPlan } from "@/hooks/useWeekPlan";
 import { useCoachChat } from "@/hooks/useCoachChat";
 import { useMobileCoach } from "@/hooks/useMobileCoach";
@@ -14,11 +13,7 @@ import Loading from "@/app/loading";
 
 export default function WorkoutPlanPage() {
   const { weekPlan, isLoading, applyReschedule } = useWeekPlan();
-  const {
-    isOpen: isCoachOpen,
-    open: openCoach,
-    close: closeCoach,
-  } = useMobileCoach();
+  const { open: openCoach } = useMobileCoach();
 
   const { messages, send, isSending, resolveAction } = useCoachChat(
     INITIAL_PLAN_COACH_MESSAGES,
@@ -47,11 +42,11 @@ export default function WorkoutPlanPage() {
     : "This Week";
 
   return (
-    <div className="relative h-full overflow-y-auto px-6 py-8 lg:pl-10 md:pr-100 lg:py-10">
+    <div className="relative h-full overflow-y-auto px-6 py-8 lg:pl-10 md:pr-97 lg:py-10">
       <div className="space-y-6">
         <WeekPlanHeader weekPlan={weekPlan} onAdjustSchedule={openCoach} />
 
-        <div className="rounded-sm overflow-hidden border border-border">
+        <div className="rounded-sm border border-border">
           {weekPlan.days.map((day) => (
             <DayRow key={day.date} day={day} />
           ))}
@@ -63,26 +58,15 @@ export default function WorkoutPlanPage() {
         </p>
       </div>
 
-      {!isCoachOpen && <AskFitaiButton onClick={openCoach} />}
-
-      {isCoachOpen && (
-        <div className="fixed inset-0 z-40">
-          <div className="absolute inset-0 bg-black/60" onClick={closeCoach} />
-          <div className="absolute inset-y-0 right-0 w-full max-w-97.5">
-            <AiCoachPanel
-              className="h-full w-full"
-              contextLabel={contextLabel}
-              messages={messages}
-              prompts={SUGGESTED_PROMPTS}
-              isSending={isSending}
-              onSend={send}
-              onClose={closeCoach}
-              onApplyAction={handleApply}
-              onKeepAsIs={handleKeepAsIs}
-            />
-          </div>
-        </div>
-      )}
+      <FloatingCoachOverlay
+        contextLabel={contextLabel}
+        messages={messages}
+        prompts={SUGGESTED_PROMPTS}
+        isSending={isSending}
+        onSend={send}
+        onApplyAction={handleApply}
+        onKeepAsIs={handleKeepAsIs}
+      />
     </div>
   );
 }
