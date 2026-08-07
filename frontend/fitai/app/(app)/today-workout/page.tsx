@@ -88,10 +88,7 @@ export default function TodayWorkoutPage() {
           </div>
         </div>
 
-        <WorkoutActionsBar
-          onFinish={() => router.push("/workout-complete")}
-          onAdapt={openCoachMobile}
-        />
+        <WorkoutActionsBar onFinish={() => router.push("/history")} />
       </main>
 
       <AiCoachPanel
