@@ -62,19 +62,19 @@ export default function ProgressPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          <div className="rounded-[4px] border border-border p-6 lg:col-span-2">
+          <div className="rounded-sm border border-border p-6 lg:col-span-2">
             <StrengthProgressionChart data={progress.strengthProgression} />
           </div>
-          <div className="rounded-[4px] border border-border p-6">
+          <div className="rounded-sm border border-border p-6">
             <PersonalRecordsList records={progress.personalRecords} />
           </div>
         </div>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          <div className="rounded-[4px] border border-border p-6 lg:col-span-2">
+          <div className="rounded-sm border border-border p-6 lg:col-span-2">
             <WeeklyVolumeChart data={progress.weeklyVolume} />
           </div>
-          <div className="flex flex-col gap-6 rounded-[4px] border border-border p-6">
+          <div className="flex flex-col gap-6 rounded-sm border border-border p-6">
             <WorkoutFrequencyChart data={progress.workoutFrequency} />
             <ThisWeekHeatmap days={progress.thisWeek} />
           </div>
