@@ -1,15 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { sendCoachMessage } from "@/services/coachService";
 import { WorkoutHeaderCard } from "@/components/workout/WorkoutHeaderCard";
 import { ExerciseCard } from "@/components/workout/ExerciseCard";
 import { WorkoutActionsBar } from "@/components/workout/WorkoutActionsBar";
 import { RestTimerPill } from "@/components/workout/RestTimerPill";
 import { AiCoachPanel } from "@/components/dashboard/AiCoachPanel";
-import { useActiveWorkout } from "@/hooks/useActiveWorkout";
+import { useActiveWorkoutContext } from "@/hooks/useActiveWorkoutContext";
 import { useRestTimer } from "@/hooks/useRestTimer";
 import { useCoachChat } from "@/hooks/useCoachChat";
+import { sendCoachMessage } from "@/services/coachService";
 import { useMobileCoach } from "@/hooks/useMobileCoach";
 import { INITIAL_TODAY_COACH_MESSAGES } from "@/data/today-coach-mock";
 import { SUGGESTED_PROMPTS } from "@/data/coach-mock";
@@ -24,11 +25,19 @@ export default function TodayWorkoutPage() {
     isLoading,
     elapsedSeconds,
     totals,
+    lastCompletionEvent,
     toggleSetComplete,
     updateSetWeight,
     updateSetReps,
     addSet,
-  } = useActiveWorkout((restSeconds) => restTimer.start(restSeconds));
+  } = useActiveWorkoutContext();
+
+  useEffect(() => {
+    if (lastCompletionEvent) {
+      restTimer.start(lastCompletionEvent.restSeconds);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastCompletionEvent?.nonce]);
 
   const { messages, send, isSending } = useCoachChat(
     INITIAL_TODAY_COACH_MESSAGES,

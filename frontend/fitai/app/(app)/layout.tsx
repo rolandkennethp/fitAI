@@ -3,8 +3,11 @@
 import { useState } from "react";
 import { Menu, Sparkles, X } from "lucide-react";
 import { Sidebar } from "@/components/dashboard/Sidebar";
-import { useDashboardSummary } from "@/hooks/useDashboard";
 import { MobileCoachProvider, useMobileCoach } from "@/hooks/useMobileCoach";
+import {
+  ActiveWorkoutProvider,
+  useActiveWorkoutContext,
+} from "@/hooks/useActiveWorkoutContext";
 
 function MobileTopBar({ progressPct }: { progressPct: number }) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -26,7 +29,7 @@ function MobileTopBar({ progressPct }: { progressPct: number }) {
           type="button"
           onClick={toggleCoach}
           aria-label="Open AI Coach"
-          className="flex h-8 w-8 items-center justify-center rounded-sm border border-border bg-bg-elevated text-lime"
+          className="flex h-8 w-8 items-center justify-center rounded-[4px] border border-border bg-bg-elevated text-lime"
         >
           <Sparkles className="h-4 w-4" />
         </button>
@@ -57,35 +60,32 @@ function MobileTopBar({ progressPct }: { progressPct: number }) {
   );
 }
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  // Fetched once here so the desktop rail and the mobile drawer's copy of
-  // the sidebar always agree on "Today" progress.
-  const { summary } = useDashboardSummary();
-  const progressPct = summary
-    ? summary.today.totalSets > 0
-      ? Math.round(
-          (summary.today.completedSets / summary.today.totalSets) * 100,
-        )
-      : 0
-    : 0;
+function AppShell({ children }: { children: React.ReactNode }) {
+  const { totals } = useActiveWorkoutContext();
+  const progressPct =
+    totals.totalSets > 0
+      ? Math.round((totals.completedSets / totals.totalSets) * 100)
+      : 0;
 
   return (
     <MobileCoachProvider>
       <div className="flex h-screen bg-bg">
-        {/* Desktop sidebar */}
         <div className="hidden lg:block">
           <Sidebar todayProgressPct={progressPct} />
         </div>
 
-        {/* Mobile: hamburger (left) opens the nav drawer, sparkle (right) opens AI Coach */}
         <MobileTopBar progressPct={progressPct} />
 
         <div className="min-w-0 flex-1 pt-14 lg:pt-0">{children}</div>
       </div>
     </MobileCoachProvider>
+  );
+}
+
+export default function AppLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <ActiveWorkoutProvider>
+      <AppShell>{children}</AppShell>
+    </ActiveWorkoutProvider>
   );
 }

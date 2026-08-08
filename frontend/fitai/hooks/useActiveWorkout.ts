@@ -4,12 +4,17 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { ActiveWorkout, SetLog } from "@/types/activeWorkout";
 import { getActiveWorkout, logSet } from "@/services/todayWorkoutService";
 
-export function useActiveWorkout(
-  onSetCompleted?: (restSeconds: number) => void,
-) {
+interface CompletionEvent {
+  restSeconds: number;
+  nonce: number;
+}
+
+export function useActiveWorkout() {
   const [workout, setWorkout] = useState<ActiveWorkout | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [lastCompletionEvent, setLastCompletionEvent] =
+    useState<CompletionEvent | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -50,42 +55,42 @@ export function useActiveWorkout(
     [],
   );
 
-  const toggleSetComplete = useCallback(
-    (exerciseId: string, setId: string) => {
-      setWorkout((prev) => {
-        if (!prev) return prev;
-        const exercise = prev.exercises.find((ex) => ex.id === exerciseId);
-        const set = exercise?.sets.find((s) => s.id === setId);
-        if (!exercise || !set) return prev;
+  const toggleSetComplete = useCallback((exerciseId: string, setId: string) => {
+    setWorkout((prev) => {
+      if (!prev) return prev;
+      const exercise = prev.exercises.find((ex) => ex.id === exerciseId);
+      const set = exercise?.sets.find((s) => s.id === setId);
+      if (!exercise || !set) return prev;
 
-        const nextCompleted = !set.isCompleted;
-        logSet(exerciseId, setId, {
-          weight: set.weight,
-          reps: set.reps,
-          isCompleted: nextCompleted,
-        });
-
-        if (nextCompleted) {
-          onSetCompleted?.(exercise.restSeconds);
-        }
-
-        return {
-          ...prev,
-          exercises: prev.exercises.map((ex) =>
-            ex.id !== exerciseId
-              ? ex
-              : {
-                  ...ex,
-                  sets: ex.sets.map((s) =>
-                    s.id === setId ? { ...s, isCompleted: nextCompleted } : s,
-                  ),
-                },
-          ),
-        };
+      const nextCompleted = !set.isCompleted;
+      logSet(exerciseId, setId, {
+        weight: set.weight,
+        reps: set.reps,
+        isCompleted: nextCompleted,
       });
-    },
-    [onSetCompleted],
-  );
+
+      if (nextCompleted) {
+        setLastCompletionEvent((prevEvent) => ({
+          restSeconds: exercise.restSeconds,
+          nonce: (prevEvent?.nonce ?? 0) + 1,
+        }));
+      }
+
+      return {
+        ...prev,
+        exercises: prev.exercises.map((ex) =>
+          ex.id !== exerciseId
+            ? ex
+            : {
+                ...ex,
+                sets: ex.sets.map((s) =>
+                  s.id === setId ? { ...s, isCompleted: nextCompleted } : s,
+                ),
+              },
+        ),
+      };
+    });
+  }, []);
 
   const updateSetWeight = useCallback(
     (exerciseId: string, setId: string, delta: number) => {
@@ -142,6 +147,7 @@ export function useActiveWorkout(
     isLoading,
     elapsedSeconds,
     totals,
+    lastCompletionEvent,
     toggleSetComplete,
     updateSetWeight,
     updateSetReps,
